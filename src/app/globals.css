@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --text-primary: #000000;
+  --text-secondary: #555555;
+  --text-accent: #0070f3;
+
+  --bg-screen: #f3f3f3;
+  --bg-primary: #2563eb;
+}
+
+.dark {
+  --text-primary: #ffffff;
+  --text-secondary: #aaaaaa;
+  --text-accent: #3b82f6;
+
+  --bg-screen: #272727;
+  --bg-primary: #2564eb94;
+}
+
+html {
+  background-color: transparent;
+}
+
+[data-theme] {
+  background-color: var(--bg-screen);
+}
