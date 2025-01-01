@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="none">
-      <body className=" h-screen bg-screen container m-auto">
+      <body className=" h-screen bg-screen ">
         <Providers>{children}</Providers>
       </body>
     </html>
