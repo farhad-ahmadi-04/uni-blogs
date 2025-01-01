@@ -1,12 +1,12 @@
-import Link from "next/link";
-import ThemeSwitch from "./ThemeSwitcher";
+import Link from 'next/link';
+import ThemeSwitch from './ThemeSwitcher';
 
 export default function Navbar() {
   return (
-    <div className="navbar text-primary">
+    <div className="navbar ">
       <div className="navbar-start flex justify-between w-full">
-        <h1 className="font-bold text-2xl">Daily thoughts</h1>
-        <div className="dropdown dropdown-end lg:hidden">
+        <h1 className="font-bold text-2xl text-primary">Daily thoughts</h1>
+        <div className="dropdown dropdown-end lg:hidden ">
           <div tabIndex={0} role="button" className="btn btn-ghost ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -25,16 +25,16 @@ export default function Navbar() {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content dropdown-left bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="bg-primary text-primary-300 menu menu-sm dropdown-content dropdown-left rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             <li>
-              <Link href={"/"}>Home</Link>
+              <Link href={'/'}>Home</Link>
             </li>
             <li>
-              <Link href={"/"}>About</Link>
+              <Link href={'/'}>About</Link>
             </li>
             <li>
-              <Link href={"/"}>Github</Link>
+              <Link href={'/'}>Github</Link>
             </li>
             <li>
               <ThemeSwitch />
@@ -45,13 +45,13 @@ export default function Navbar() {
       <div className="navbar-end hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link href={"/"}>Home</Link>
+            <Link href={'/'}>Home</Link>
           </li>
           <li>
-            <Link href={"/"}>About</Link>
+            <Link href={'/'}>About</Link>
           </li>
           <li>
-            <Link href={"/"}>Github</Link>
+            <Link href={'/'}>Github</Link>
           </li>
           <li>
             <ThemeSwitch />
