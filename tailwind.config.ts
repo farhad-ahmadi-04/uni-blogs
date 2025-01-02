@@ -21,6 +21,7 @@ export default {
       backgroundColor: {
         primary: 'var(--bg-primary)',
         screen: 'var(--bg-screen)',
+        secondary: 'var(--bg-secondary)',
       },
     },
   },
