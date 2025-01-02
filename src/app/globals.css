@@ -11,6 +11,7 @@
 
   --bg-screen: #f3f3f3;
   --bg-primary: #00b6ff;
+  --bg-secondary: #edf8ff;
 }
 
 .dark {
@@ -20,6 +21,7 @@
   --text-accent: #3b82f6;
 
   --bg-screen: #1a1a1a;
+  --bg-secondary: #1f2021;
 }
 
 html {
