@@ -1,3 +1,4 @@
+import Advice from "@/components/Advice";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 
@@ -7,6 +8,7 @@ export default function Home() {
       <Navbar />
       <main className="h-full">
         <Hero />
+        {Array.from({ length: 2 }, ((_, i) => <Advice key={i} />))}
       </main>
     </div>
   );
