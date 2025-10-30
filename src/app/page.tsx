@@ -9,6 +9,8 @@ export default function Home() {
       <div>Hero section</div>
       {/* features sec */}
       <div>Features section</div>
+      {/* categories sec */}
+      <div>Categories section</div>
       {/* blog sec */}
       <div>Blog section</div>
     </Container>
