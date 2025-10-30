@@ -1,18 +1,24 @@
-import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
-import Image from "next/image";
 
 export default function Home() {
   return (
-    <Container>
+    <>
       {/* hero sec */}
-      <div>Hero section</div>
+      <section>
+        <Container>Hero section</Container>
+      </section>
       {/* features sec */}
-      <div>Features section</div>
+      <section>
+        <Container>Features section</Container>
+      </section>
       {/* categories sec */}
-      <div>Categories section</div>
+      <section>
+        <Container>Categories section</Container>
+      </section>
       {/* blog sec */}
-      <div>Blog section</div>
-    </Container>
+      <section>
+        <Container>Blog section</Container>
+      </section>
+    </>
   );
 }
