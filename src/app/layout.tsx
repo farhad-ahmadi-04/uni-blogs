@@ -26,21 +26,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
       >
-        <SidebarProvider open={false}>
-          <AppSidebar />
-          <div className="w-full">
+          <div>
             {/* header */}
-            <Header sidebar={<SidebarTrigger size={"icon-lg"} className="size-10"/>} />
+            <Header  />
 
             {/* main */}
             <main className="min-h-screen">{children}</main>
             {/* footer */}
           </div>
-        </SidebarProvider>
       </body>
     </html>
   );

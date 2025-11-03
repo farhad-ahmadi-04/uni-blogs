@@ -1,4 +1,4 @@
-import { BookOpenText, Contact, Home, Newspaper } from "lucide-react";
+import { BookOpenText, Home, Newspaper } from "lucide-react";
 
 // menu item
 const menuItems = [
@@ -13,14 +13,9 @@ const menuItems = [
     icon: BookOpenText ,
   },
   {
-    title: "Blog",
-    href: "/blogs",
-    icon: Newspaper 
-  },
-  {
-    title: "Contact",
-    href: "/contact",
-    icon: Contact
+    title: "Projects",
+    href: "/projects",
+    icon: Newspaper
   },
 ];
 export default menuItems;
