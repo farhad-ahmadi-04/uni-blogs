@@ -7,6 +7,7 @@ import { LogIn, PanelBottomCloseIcon, PanelTopCloseIcon } from "lucide-react";
 import menuItems from "@/lib/menuItem";
 import { useState } from "react";
 import { Input } from "./ui/input";
+import { ModeToggle } from "./modeToggle";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,17 +16,24 @@ function Header() {
     <header className="w-full">
       <Container className="py-4 flex justify-between items-center">
         {/* mobile menu */}
-        <Button
-          variant="ghost"
+        <div
           onClick={() => setIsOpen(!isOpen)}
-          className="text-lg md:hidden"
+          className="text-lg flex items-center gap-2 md:hidden"
         >
           <div className="relative w-5 h-full">
-            <span className={`absolute top-1.5 left-0 right-0 w-5 h-1 bg-black transition-all duration-300 ${isOpen ? "rotate-45 translate-y-1" : ""}`}></span>
-            <span className={`absolute left-0 bottom-0.5 right-0 w-5 h-1 bg-black transition-all duration-300 ${isOpen ? "-rotate-45 -translate-y-1" : ""}`}></span>
+            <span
+              className={`absolute top-1.5 left-0 right-0 w-6 h-1 bg-primary transition-all duration-300 ${
+                isOpen ? "rotate-45 -translate-y-2" : ""
+              }`}
+            ></span>
+            <span
+              className={`absolute left-0 bottom-0.5 right-0 w-6 h-1 bg-primary transition-all duration-300 ${
+                isOpen ? "-rotate-45 translate-y-1" : ""
+              }`}
+            ></span>
           </div>
           menu
-        </Button>
+        </div>
 
         <nav
           className={`block md:hidden absolute left-0 right-0 top-[72px] transition-all ease-in-out duration-300 transform ${
@@ -38,7 +46,7 @@ function Header() {
             } flex h-full flex-col justify-center items-center gap-4 text-2xl font-semibold`}
           >
             {menuItems.map((item) => (
-              <li key={item.title} onClick={()=> setIsOpen(!isOpen)}>
+              <li key={item.title} onClick={() => setIsOpen(!isOpen)}>
                 <Link href={item.href}>{item.title}</Link>
               </li>
             ))}
@@ -63,9 +71,11 @@ function Header() {
         <div>
           <div className="flex items-center gap-2">
             <Input placeholder="Search..." />
-          <Button variant="outline" size="icon-lg">
-            <LogIn />
-          </Button>
+            {/* dark and light mode */}
+            <ModeToggle />
+            <Button variant="outline" size="icon-lg">
+              <LogIn />
+            </Button>
           </div>
         </div>
       </Container>
