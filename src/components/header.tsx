@@ -36,7 +36,7 @@ function Header() {
         </div>
 
         <nav
-          className={`block md:hidden absolute left-0 right-0 top-[72px] transition-all ease-in-out duration-300 transform ${
+          className={`block md:hidden absolute z-10 left-0 right-0 top-[72px] transition-all ease-in-out duration-300 transform ${
             isOpen ? "bottom-0" : "bottom-full"
           } bg-background`}
         >
