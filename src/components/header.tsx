@@ -7,7 +7,7 @@ import { LogIn, PanelBottomCloseIcon, PanelTopCloseIcon } from "lucide-react";
 import menuItems from "@/lib/menuItem";
 import { useState } from "react";
 import { Input } from "./ui/input";
-import { ModeToggle } from "./modeToggle";
+import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,7 +72,8 @@ function Header() {
           <div className="flex items-center gap-2">
             <Input placeholder="Search..." />
             {/* dark and light mode */}
-            <ModeToggle />
+            {/* <ModeToggle /> */}
+            <AnimatedThemeToggler />
             <Button variant="outline" size="icon-lg">
               <LogIn />
             </Button>
