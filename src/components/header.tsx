@@ -8,6 +8,13 @@ import menuItems from "@/lib/menuItem";
 import { useState } from "react";
 import { Input } from "./ui/input";
 import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,9 +81,17 @@ function Header() {
             {/* dark and light mode */}
             {/* <ModeToggle /> */}
             <AnimatedThemeToggler />
-            <Button variant="outline" size="icon-lg">
+            {/* <Button variant="outline" size="icon-lg">
               <LogIn />
-            </Button>
+            </Button> */}
+            <SignedOut>
+              <Button variant={"outline"} asChild>
+                <SignInButton />
+              </Button>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
           </div>
         </div>
       </Container>
