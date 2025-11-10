@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeContextProvider } from "@/hooks/useContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,20 +26,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider
-    appearance={{
-      theme: 'simple'
-    }}>
+    <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body
           suppressHydrationWarning
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
-        >
-          {/* header */}
-          <Header />
+          >
+          <ThemeContextProvider>
+            {/* header */}
+            <Header />
           {/* main */}
           <main className="min-h-screen">{children}</main>
           {/* footer */}
+          </ThemeContextProvider>
         </body>
       </html>
     </ClerkProvider>

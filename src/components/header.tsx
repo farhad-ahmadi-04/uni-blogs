@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Container from "./ui/container";
 import { Button } from "./ui/button";
-import { LogIn, PanelBottomCloseIcon, PanelTopCloseIcon } from "lucide-react";
 import menuItems from "@/lib/menuItem";
 import { useState } from "react";
 import { Input } from "./ui/input";
@@ -12,11 +11,13 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
-  SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
+import { useTheme } from "@/hooks/useContext";
+import { dark, experimental__simple } from '@clerk/themes'
 
 function Header() {
+  const { isDark } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -86,11 +87,13 @@ function Header() {
             </Button> */}
             <SignedOut>
               <Button variant={"outline"} asChild>
-                <SignInButton />
+                <SignInButton/>
               </Button>
             </SignedOut>
             <SignedIn>
-              <UserButton />
+              <UserButton appearance={{
+                baseTheme: isDark ? dark : experimental__simple
+              }}/>
             </SignedIn>
           </div>
         </div>
