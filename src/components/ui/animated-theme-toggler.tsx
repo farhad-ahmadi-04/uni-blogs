@@ -6,6 +6,7 @@ import { flushSync } from "react-dom"
 
 import { cn } from "@/lib/utils"
 import { Button } from "./button"
+import { useTheme } from "@/hooks/useContext"
 
 interface AnimatedThemeTogglerProps
   extends React.ComponentPropsWithoutRef<"button"> {
@@ -17,7 +18,8 @@ export const AnimatedThemeToggler = ({
   duration = 400,
   ...props
 }: AnimatedThemeTogglerProps) => {
-  const [isDark, setIsDark] = useState(false)
+  const {isDark, setIsDark} = useTheme()
+  // const [isDark, setIsDark] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
