@@ -7,14 +7,9 @@ import menuItems from "@/lib/menuItem";
 import { useState } from "react";
 import { Input } from "./ui/input";
 import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useTheme } from "@/hooks/useContext";
-import { dark, experimental__simple } from '@clerk/themes'
+import { dark, experimental__simple } from "@clerk/themes";
 
 function Header() {
   const { isDark } = useTheme();
@@ -86,14 +81,16 @@ function Header() {
               <LogIn />
             </Button> */}
             <SignedOut>
-              <Button variant={"outline"} asChild>
-                <SignInButton/>
-              </Button>
+              <Link href={"/sign-in"}>
+                <Button variant={"outline"}>Sign in</Button>
+              </Link>
             </SignedOut>
             <SignedIn>
-              <UserButton appearance={{
-                baseTheme: isDark ? dark : experimental__simple
-              }}/>
+              <UserButton
+                appearance={{
+                  baseTheme: isDark ? dark : experimental__simple,
+                }}
+              />
             </SignedIn>
           </div>
         </div>
