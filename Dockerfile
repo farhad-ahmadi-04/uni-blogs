@@ -47,6 +47,8 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 # Copy the rest of the source files into the image.
 COPY . .
 # Run the build script.
+ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="dummy_key"
+ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
 RUN pnpm run build
 
 ################################################################################
