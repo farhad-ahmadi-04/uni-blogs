@@ -33,8 +33,8 @@ export async function POST(req: NextRequest) {
           id,
           first_name,
           last_name,
-          email_addresses,
           image_url,
+          email_addresses,
           username
         );
 
