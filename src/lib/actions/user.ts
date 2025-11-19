@@ -1,24 +1,21 @@
 import User from "../models/user.model";
 import { connect } from "@/lib/mongodb/mongoose";
 
-interface emailAddressType {
-  created_at: number;
+export type ClerkEmailAddress = {
   email_address: string;
   id: string;
-  linked_to: Array<unknown>;
-  matches_sso_connection: boolean;
   object: string;
-  reserved: false;
-  updated_at: number;
-  verification: object;
-}
+  verification: any;
+  linked_to: any[];
+};
+
 
 export const createOrUpdateUser = async (
   id: string,
   first_name?: string | null,
   last_name?: string | null,
   image_Url?: string | null,
-  email_addresses?: emailAddressType[],
+  email_addresses?: ClerkEmailAddress[],
   username?: string | null
 ) => {
   try {
