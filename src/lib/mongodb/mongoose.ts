@@ -9,7 +9,7 @@ export const connect = async ()=>{
         return
     }
     try {
-        await mongoose.connect(process.env.NEXT_MONGODB_URI || "",{
+        await mongoose.connect(process.env.MONGODB_URI || "",{
             dbName: "uni-blogs",
         });
         console.log("Connected to MongoDB");
