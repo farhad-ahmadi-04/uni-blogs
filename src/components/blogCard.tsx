@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { TypographyH3, TypographyP } from "./ui/typography";
 
+/**
+ * 
+ * @returns create blog card component, that is also link to blog page
+ */
 function BlogCard() {
   return (
     <Link href={"/"}>
