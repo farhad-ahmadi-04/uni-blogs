@@ -23,9 +23,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { category, formSchema, formSchemaType } from "./createPostFormSchema";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(()=> import('react-quill-new'), { ssr: false });
+import 'react-quill-new/dist/quill.snow.css';
 
 function CreatePostForm() {
+  const [value, setValue] = useState('');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   // 1. Define your form.
   const form = useForm<formSchemaType>({
@@ -34,6 +38,7 @@ function CreatePostForm() {
       title: "",
       category: undefined,
       image: undefined,
+      blog: ""
     },
     resolver: zodResolver(formSchema),
   });
@@ -124,6 +129,20 @@ function CreatePostForm() {
                     field.onChange(e.target.files);
                   }}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="blog"
+          render={({ field }) => (
+            <FormItem className="mb-7">
+              <FormControl>
+                <ReactQuill {...field} theme="snow"  onBlur={field.onChange}
+                    defaultValue={field.value} placeholder="Write something..." 
+                    className="h-72"/>
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -23,5 +23,6 @@ export const formSchema = z.object({
       "Only PNG / JPG allowed"
     )
     .refine((files) => files?.[0]?.size <= 5 * 1024 * 1024, "Max size is 5MB"),
+  blog: z.string(),
 });
 export type formSchemaType = z.infer<typeof formSchema>;
