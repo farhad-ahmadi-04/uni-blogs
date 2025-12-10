@@ -27,6 +27,7 @@ import { useRef, useState } from "react";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(()=> import('react-quill-new'), { ssr: false });
 import 'react-quill-new/dist/quill.snow.css';
+import UploadImage from "@/components/uploadImage";
 
 function CreatePostForm() {
   const [value, setValue] = useState('');
@@ -62,9 +63,9 @@ function CreatePostForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex gap-8 flex-col w-8/12"
+        className="flex gap-8 flex-col w-full md:w-10/12 lg:w-8/12"
       >
-        <div className="flex items-start gap-2">
+        <div className="flex flex-col md:flex-row items-start gap-8 md:gap-2">
           <FormField
             control={form.control}
             name="title"
@@ -87,14 +88,14 @@ function CreatePostForm() {
             control={form.control}
             name="category"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-full md:w-[180px]">
                 <FormLabel>category</FormLabel>
                 <FormControl>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="w-full md:w-[180px]">
                       <SelectValue placeholder="Select a fruit" />
                     </SelectTrigger>
                     <SelectContent>
@@ -121,14 +122,15 @@ function CreatePostForm() {
             <FormItem>
               <FormLabel>Upload image</FormLabel>
               <FormControl>
-                <Input
+                {/* <Input
                   type="file"
                   accept="image/*"
                   ref={fileInputRef}
                   onChange={(e) => {
                     field.onChange(e.target.files);
                   }}
-                />
+                /> */}
+                <UploadImage/>
               </FormControl>
               <FormMessage />
             </FormItem>
