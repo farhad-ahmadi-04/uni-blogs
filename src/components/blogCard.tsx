@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TypographyH3, TypographyP } from "./ui/typography";
+import { Image } from "@imagekit/next";
 
 /**
  * 
@@ -10,7 +11,13 @@ function BlogCard() {
     <Link href={"/"}>
       <div className="border border-border">
         <div className="flex items-center justify-center h-52 bg-blue-950">
-          Image
+          <Image
+          src="/default-image.jpg"
+          width={300}
+          height={200}
+          alt="picture of boy"
+          className="w-full h-full bg-cover"
+          />
         </div>
         <div className="p-5 space-y-4">
           <TypographyH3>
