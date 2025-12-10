@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeContextProvider } from "@/hooks/useContext";
+import { ImageKitProvider } from "@imagekit/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,21 +27,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body
-          suppressHydrationWarning
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
+    <ImageKitProvider urlEndpoint={process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}>
+      <ClerkProvider>
+        <html lang="en" suppressHydrationWarning>
+          <body
+            suppressHydrationWarning
+            className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
           >
-          <ThemeContextProvider>
-            {/* header */}
-            <Header />
-          {/* main */}
-          <main className="min-h-screen">{children}</main>
-          {/* footer */}
-          </ThemeContextProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+            <ThemeContextProvider>
+              {/* header */}
+              <Header />
+              {/* main */}
+              <main className="min-h-screen">{children}</main>
+              {/* footer */}
+            </ThemeContextProvider>
+          </body>
+        </html>
+      </ClerkProvider>
+    </ImageKitProvider>
   );
 }
