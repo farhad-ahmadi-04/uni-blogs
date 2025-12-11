@@ -121,9 +121,10 @@
   }
 }
 
-::view-transition-old(root), ::view-transition-new(root) {
-    animation: none;
-    mix-blend-mode: normal;
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 .ql-editor {
@@ -131,7 +132,7 @@
   color: var(--foreground);
 }
 .ql-editor.ql-blank:before {
-  color: var(--ring)!important;
+  color: var(--ring) !important;
 }
 
 .post-content p {
@@ -162,4 +163,9 @@
 
 .dark .post-content a {
   color: red;
+}
+
+/* progress bar value */
+progress::-webkit-progress-value {
+  background-color: var(--primary);
 }
