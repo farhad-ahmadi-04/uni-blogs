@@ -25,13 +25,22 @@ import {
 import { category, formSchema, formSchemaType } from "./createPostFormSchema";
 import { useRef, useState } from "react";
 import dynamic from "next/dynamic";
-const ReactQuill = dynamic(()=> import('react-quill-new'), { ssr: false });
-import 'react-quill-new/dist/quill.snow.css';
-import UploadImage from "@/components/uploadImage";
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
+import "react-quill-new/dist/quill.snow.css";
+import useUploadImage from "@/hooks/useUploadImage";
+import { Progress } from "@/components/ui/progress";
+import { Image } from "@imagekit/next";
+import { DEFAULT_IMAGE, DEFAULT_IMAGE_ALT } from "@/lib/canstants";
 
 function CreatePostForm() {
-  const [value, setValue] = useState('');
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [value, setValue] = useState("");
+  const {
+    fileInputRef: ref,
+    handleUpload,
+    progress,
+    uploadResponse,
+  } = useUploadImage();
+  // const fileInputRef = useRef<HTMLInputElement | null>(null);
   // 1. Define your form.
   const form = useForm<formSchemaType>({
     mode: "onBlur",
@@ -39,7 +48,7 @@ function CreatePostForm() {
       title: "",
       category: undefined,
       image: undefined,
-      blog: ""
+      blog: "",
     },
     resolver: zodResolver(formSchema),
   });
@@ -54,10 +63,12 @@ function CreatePostForm() {
       title: "",
       image: undefined,
     });
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+    if (ref.current) {
+      ref.current.value = "";
     }
   }
+  console.log(new Date().toLocaleDateString());
+  
 
   return (
     <Form {...form}>
@@ -115,36 +126,64 @@ function CreatePostForm() {
             )}
           />
         </div>
-        <FormField
-          control={form.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Upload image</FormLabel>
-              <FormControl>
-                {/* <Input
-                  type="file"
-                  accept="image/*"
-                  ref={fileInputRef}
-                  onChange={(e) => {
-                    field.onChange(e.target.files);
-                  }}
-                /> */}
-                <UploadImage/>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-end gap-2">
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Upload image</FormLabel>
+                  <FormControl>
+                    {/* File input element using React ref */}
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      ref={ref}
+                      onChange={(e) => {
+                        field.onChange(e.target.files);
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* Button to trigger the upload process */}
+            <Button type="button" onClick={handleUpload}>
+              Upload file
+            </Button>
+          </div>
+          {/* Display the current upload progress */}
+          <progress
+            className="bg-primary/20 relative h-2 w-full overflow-hidden rounded-full text-red-300"
+            value={progress}
+            max={100}
+          ></progress>
+          {uploadResponse.$ResponseMetadata?.statusCode === 200 && (
+            <Image
+              src={uploadResponse.name || DEFAULT_IMAGE}
+              alt={uploadResponse.name || DEFAULT_IMAGE_ALT}
+              width={uploadResponse.width}
+              height={uploadResponse.height}
+              className="w-full"
+            />
           )}
-        />
+        </div>
         <FormField
           control={form.control}
           name="blog"
           render={({ field }) => (
             <FormItem className="mb-7">
               <FormControl>
-                <ReactQuill {...field} theme="snow"  onBlur={field.onChange}
-                    defaultValue={field.value} placeholder="Write something..." 
-                    className="h-72"/>
+                <ReactQuill
+                  {...field}
+                  theme="snow"
+                  onBlur={field.onChange}
+                  defaultValue={field.value}
+                  placeholder="Write something..."
+                  className="h-72"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
