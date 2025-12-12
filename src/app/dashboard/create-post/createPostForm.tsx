@@ -29,22 +29,22 @@ import "react-quill-new/dist/quill.snow.css";
 import useUploadImage from "@/hooks/useUploadImage";
 import { Image } from "@imagekit/next";
 import { DEFAULT_IMAGE, DEFAULT_IMAGE_ALT } from "@/lib/canstants";
-import { JSX, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { JSX, useState } from "react";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 /**
  * CreatePostForm component - A form for creating and publishing new blog posts
- * 
+ *
  * This component provides a comprehensive form interface for users to create blog posts with:
  * - Post title input
  * - Category selection dropdown
  * - Image upload with progress tracking
  * - Rich text editor for blog content using ReactQuill
- * 
+ *
  * @component
  * @returns {JSX.Element} A form component with title, category, image upload, and blog content fields
- * 
+ *
  * @remarks
  * - Integrates with react-hook-form for form state management and validation (Zod schema)
  * - Uses Clerk's useUser hook to retrieve user authentication metadata
@@ -53,11 +53,12 @@ import { useUser } from "@clerk/nextjs";
  * - Sends form data to `/api/post/create` endpoint with user metadata
  * - Redirects to the created post page on successful submission
  * - Displays error messages for upload and submission failures
- * 
+ *
  * @example
  * <CreatePostForm />
  */
 function CreatePostForm(): JSX.Element {
+  const [postLoading, setPostLoading] = useState<boolean>(false);
   const router = useRouter();
   const { user } = useUser();
   const [publishError, setPublishError] = useState<string | null>(null);
@@ -74,14 +75,14 @@ function CreatePostForm(): JSX.Element {
       title: "",
       category: "category",
       image: undefined,
-      blog: undefined,
+      content: undefined,
     },
     resolver: zodResolver(formSchema),
   });
 
-  useEffect(() => {
-    console.log(form.getValues());
-  }, [form.formState.errors]);
+  // useEffect(() => {
+  //   console.log(form.getValues());
+  // }, [form.formState.errors]);
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -92,17 +93,19 @@ function CreatePostForm(): JSX.Element {
       });
       return;
     }
-    form.reset({
-      category: "category",
-      title: "",
-      image: undefined,
-      blog: undefined,
-    });
-    if (ref.current) {
-      ref.current.value = "";
-    }
+    // form.reset({
+    //   category: "category",
+    //   title: "",
+    //   image: undefined,
+    //   content: undefined,
+    // });
+    // if (ref.current) {
+    //   ref.current.value = "";
+    // }
     // ✅ This will be type-safe and validated.
     try {
+      console.log(values);
+      setPostLoading(true);
       const res = await fetch("/api/post/create", {
         method: "POST",
         headers: {
@@ -110,19 +113,24 @@ function CreatePostForm(): JSX.Element {
         },
         body: JSON.stringify({
           ...values,
+          image: values.image["0"].name,
           userMongoId: user?.publicMetadata.userMongoId,
         }),
       });
       const data = await res.json();
+
       if (!res.ok) {
+        setPostLoading(false);
         setPublishError(data.message);
         return;
       }
       if (res.ok) {
         setPublishError(null);
+        setPostLoading(false);
         router.push(`/post/${data.slug}`);
       }
     } catch (error) {
+      setPostLoading(false);
       setPublishError("Something went wrong");
     }
   }
@@ -233,7 +241,7 @@ function CreatePostForm(): JSX.Element {
         )}
         <FormField
           control={form.control}
-          name="blog"
+          name="content"
           render={({ field }) => (
             <FormItem className="mb-7">
               <FormControl>
@@ -252,7 +260,9 @@ function CreatePostForm(): JSX.Element {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={postLoading}>
+          {postLoading ? "Publishing..." : "Publish Post"}
+        </Button>
       </form>
     </Form>
   );
