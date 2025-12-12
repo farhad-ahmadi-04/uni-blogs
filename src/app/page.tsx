@@ -6,11 +6,41 @@ import {
   TypographyH1,
   TypographyP,
 } from "@/components/ui/typography";
+import { postInterface } from "@/types/postT";
 
-export default function Home() {
+export default async function Home() {
+let post = [] as postInterface[];
+  let error = ""
+  try {
+    const result = await fetch(process.env.URL + "/api/post/get", {
+      method: "POST",
+      body: JSON.stringify({ limit: 9, order: 'desc' }),
+      cache: "no-store",
+    });
+    const data = await result.json();
+    console.log(data);
+    
+    post = data.posts;
+  } catch (error) {
+    error =  "Failed to load post" ;
+  }
+
+  if (!post || error === "Failed to load post") {
+    return (
+      <section>
+        <Container>
+          <h2 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl">
+            Something went wrong please try again.
+          </h2>
+        </Container>
+      </section>
+    );
+  }
+
+
   return (
     <>
-      <section className="relative">
+      <section className="relative mb-10">
         <FlickeringGrid
           className="absolute overflow-hidden w-full h-[200px] inset-0 -z-10 mask-[linear-gradient(to_top,transparent_25%,black_95%)]"
           squareSize={4}
@@ -27,28 +57,13 @@ export default function Home() {
               Latest news and updates
             </TypographyP>
           </div>
-          <div className="flex items-center flex-wrap gap-2">
-            <BlogCategory count={10} name="all" />
-            <BlogCategory count={1} name="animation" />
-            <BlogCategory count={1} name="landing page examples" />
-            <BlogCategory count={3} name="mobile" />
-            <BlogCategory count={1} name="portfolio" />
-            <BlogCategory count={2} name="react" />
-            <BlogCategory count={1} name="react native" />
-            <BlogCategory count={1} name="ui frameworks" />
-          </div>
         </Container>
       </section>
       {/* blogs sec */}
       <section>
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 relative overflow-hidden">
-            <BlogCard/>
-            <BlogCard/>
-            <BlogCard/>
-            <BlogCard/>
-            <BlogCard/>
-            <BlogCard/>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 overflow-hidden">
+            {post.map(p=> <BlogCard key={p._id} post={p} />)}
           </div>
         </Container>
       </section>
