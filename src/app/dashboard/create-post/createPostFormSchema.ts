@@ -13,7 +13,10 @@ export const formSchema = z.object({
   title: z.string().min(3, {
     error: "Too small: expected string to have more than 3 characters",
   }),
-  category: z.string().min(1, "Please select a category"),
+  category: z.string()
+  .refine((val) => val !== "category", {
+    message: "Please select a category",
+  }),
   image: z
     .any()
     .refine((files) => files?.length === 1, "Please upload an image")
