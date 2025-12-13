@@ -4,16 +4,37 @@ import Link from "next/link";
 import Container from "./ui/container";
 import { Button } from "./ui/button";
 import menuItems from "@/lib/menuItem";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { AnimatedThemeToggler } from "./ui/animated-theme-toggler";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useTheme } from "@/hooks/useContext";
 import { dark, experimental__simple } from "@clerk/themes";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function Header() {
   const { isDark } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const [searchItem, setSearchItem] = useState("");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const handleSearch = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const urlParams = new URLSearchParams(searchParams.toString());
+      urlParams.set("searchTerm", searchItem);
+      const searchQuery = urlParams.toString();
+      router.push(`/search?${searchQuery}`);
+    },
+    [searchItem]
+  );
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(searchParams.toString());
+    const searchTermFormUrl = urlParams.get("searchTerm");
+    if (searchTermFormUrl) setSearchItem(searchTermFormUrl);
+  }, [searchParams]);
 
   return (
     <header className="w-full">
@@ -73,7 +94,14 @@ function Header() {
         </nav>
         <div>
           <div className="flex items-center gap-2">
-            <Input placeholder="Search..." />
+            <form action="" onSubmit={handleSearch}>
+              <Input
+                placeholder="Search..."
+                type="text"
+                value={searchItem}
+                onChange={(e) => setSearchItem(e.target.value)}
+              />
+            </form>
             {/* dark and light mode */}
             {/* <ModeToggle /> */}
             <AnimatedThemeToggler />
