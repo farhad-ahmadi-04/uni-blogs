@@ -18,7 +18,6 @@ let post = [] as postInterface[];
       cache: "no-store",
     });
     const data = await result.json();
-    console.log(data);
     
     post = data.posts;
   } catch (error) {
