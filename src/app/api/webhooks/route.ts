@@ -41,8 +41,8 @@ export async function POST(req: NextRequest) {
             const client = await clerkClient();
             await client.users.updateUserMetadata(id, {
               publicMetadata: {
-                userMongoId: user._id,
-                isAdmin: user.isAdmin,
+                userMongoId: user._id as string,
+                isAdmin: user.isAdmin as boolean,
               },
             });
           } catch (error) {
