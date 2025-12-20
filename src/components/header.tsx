@@ -118,6 +118,7 @@ function Header() {
                 appearance={{
                   baseTheme: isDark ? dark : experimental__simple,
                 }}
+                userProfileUrl="/dashboard?tab=profile"
               />
             </SignedIn>
           </div>
