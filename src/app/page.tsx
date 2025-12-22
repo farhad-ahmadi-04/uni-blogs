@@ -1,5 +1,4 @@
 import BlogCard from "@/components/blogCard";
-import BlogCategory from "@/components/blogCategory";
 import Container from "@/components/ui/container";
 import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import {
