@@ -10,7 +10,7 @@ function CreatePostPage() {
 
   if (isSignedIn && user.publicMetadata.isAdmin) {
     return (
-      <section>
+      <section className="w-full">
         <Container className="flex flex-col items-center gap-6">
           <h1 className="text-center text-2xl font-semibold">Create a post</h1>
           <CreatePostForm />
