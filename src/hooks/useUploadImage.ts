@@ -123,7 +123,12 @@ const useUploadImage = () => {
     }
   };
 
-  return { fileInputRef, handleUpload, progress, uploadResponse };
+const resetUpload = () => {
+  setUploadResponse({} as UploadResponse);
+  setProgress(0);
+};
+
+  return { fileInputRef, handleUpload, progress, uploadResponse, resetUpload };
 };
 
 export default useUploadImage;
