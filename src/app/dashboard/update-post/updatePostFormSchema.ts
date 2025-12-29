@@ -19,13 +19,13 @@ export const formSchema = z.object({
   }),
   image: z
     .any()
-    .refine((files) => files?.length === 1, "Please upload an image")
+    .optional()
     .refine(
       (files) =>
-        ["image/png", "image/jpeg", "image/jpg"].includes(files?.[0]?.type),
+        !files || ["image/png", "image/jpeg", "image/jpg"].includes(files?.type),
       "Only PNG / JPG allowed"
     )
-    .refine((files) => files?.[0]?.size <= 5 * 1024 * 1024, "Max size is 5MB"),
+    .refine((files) => !files || files?.size <= 5 * 1024 * 1024, "Max size is 5MB"),
   content: z.string(),
 });
 export type formSchemaType = z.infer<typeof formSchema>;
