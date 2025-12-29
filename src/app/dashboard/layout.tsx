@@ -5,6 +5,7 @@ import Container from "@/components/ui/container";
 import { TypographyH1 } from "@/components/ui/typography";
 import { useUser } from "@clerk/nextjs";
 import { Suspense } from "react";
+import Loading from "@/app/loading";
 
 export default function DashboardLayout({
   children,
@@ -25,7 +26,7 @@ export default function DashboardLayout({
           <div className="py-5 px-1 hidden md:flex md:w-full md:flex-row lg:flex-col lg:w-52 lg:border-r-2 lg:border-r-border bg-background">
             <DashboardSidebar />
           </div>
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          <Suspense fallback={<Loading />}>{children}</Suspense>
         </Container>
       </section>
     );
