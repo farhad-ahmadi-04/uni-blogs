@@ -80,10 +80,6 @@ function CreatePostForm(): JSX.Element {
     resolver: zodResolver(formSchema),
   });
 
-  // useEffect(() => {
-  //   console.log(form.getValues());
-  // }, [form.formState.errors]);
-
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -93,16 +89,8 @@ function CreatePostForm(): JSX.Element {
       });
       return;
     }
-    // form.reset({
-    //   category: "category",
-    //   title: "",
-    //   image: undefined,
-    //   content: undefined,
-    // });
-    // if (ref.current) {
-    //   ref.current.value = "";
-    // }
-    // ✅ This will be type-safe and validated.
+
+    // This will be type-safe and validated.
     try {
       console.log(values);
       setPostLoading(true);
