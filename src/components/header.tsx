@@ -27,19 +27,17 @@ function Header() {
   const router = useRouter();
   const { isSignedIn, user } = useUser();
   const [tab, setTab] = useState("");
-  const url = usePathname()
-  
+  const url = usePathname();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(searchParams);
     const tabFromUrl = urlParams.get("tab");
     if (tabFromUrl) {
       setTab(tabFromUrl);
-    }else {
+    } else {
       setTab("");
     }
   }, [searchParams]);
-
 
   const handleSearch = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -91,58 +89,72 @@ function Header() {
               isOpen ? "opacity-100" : "opacity-0"
             } flex h-full flex-col justify-center items-center gap-4 text-2xl font-semibold`}
           >
-             {/* menu of header */}
+            {/* menu of header */}
             {menuItems.map((item) => (
               <li key={item.title} onClick={() => setIsOpen(!isOpen)}>
-                <Link href={item.href} className={`${url === item.href && "text-ring"}`}>{item.title}</Link>
+                <Link
+                  href={item.href}
+                  className={`${url === item.href && "text-ring"}`}
+                >
+                  {item.title}
+                </Link>
               </li>
             ))}
-             <TypographyP className="text-muted-foreground font-medium text-xl">--Dashboard menu--</TypographyP>
-             {/* add dashboard menu when user is signed in and open menu */}
+            <TypographyP className="text-muted-foreground font-medium text-xl">
+              --Dashboard menu--
+            </TypographyP>
+            {/* add dashboard menu when user is signed in and open menu */}
             {isSignedIn && (user.publicMetadata.isAdmin as boolean) && (
               <li onClick={() => setIsOpen(!isOpen)}>
-                  <Link
-                    href="/dashboard?tab=dash"
-                    className={`${tab === "dash" && url === "/dashboard" && "text-ring"} w-full flex items-center gap-2`}
-                  >
-                    Dashboard
-                  </Link>
+                <Link
+                  href="/dashboard?tab=dash"
+                  className={`${
+                    tab === "dash" && url === "/dashboard" && "text-ring"
+                  } w-full flex items-center gap-2`}
+                >
+                  Dashboard
+                </Link>
               </li>
             )}
             <li onClick={() => setIsOpen(!isOpen)}>
-                <Link
-                  href="/dashboard?tab=profile"
-                  className={`${tab === "profile" && url === "/dashboard" && "text-ring" } w-full flex items-center justify-between gap-2`}
-                >
-                  <div className="flex items-center gap-2">Profile</div>
-                  <div className="text-sm font-medium text-muted-foreground">
-                    {user?.publicMetadata?.isAdmin ? "Admin" : "User"}
-                  </div>
-                </Link>
+              <Link
+                href="/dashboard?tab=profile"
+                className={`${
+                  tab === "profile" && url === "/dashboard" && "text-ring"
+                } w-full flex items-center justify-between gap-2`}
+              >
+                <div className="flex items-center gap-2">Profile</div>
+                <div className="text-sm font-medium text-muted-foreground">
+                  {user?.publicMetadata?.isAdmin ? "Admin" : "User"}
+                </div>
+              </Link>
             </li>
             {(user?.publicMetadata?.isAdmin as boolean) && (
               <li onClick={() => setIsOpen(!isOpen)}>
-                  <Link
-                    href="/dashboard?tab=posts"
-                    className={`${tab === "posts" && url === "/dashboard" && "text-ring"} w-full flex items-center gap-2`}
-  
-                  >
-                    Posts
-                  </Link>
+                <Link
+                  href="/dashboard?tab=posts"
+                  className={`${
+                    tab === "posts" && url === "/dashboard" && "text-ring"
+                  } w-full flex items-center gap-2`}
+                >
+                  Posts
+                </Link>
               </li>
             )}
             {(user?.publicMetadata?.isAdmin as boolean) && (
               <li onClick={() => setIsOpen(!isOpen)}>
-                  <Link
-                    href="/dashboard?tab=users"
-                    className={`${tab === "users" && url === "/dashboard" && "text-ring"} w-full flex items-center gap-2`}
-                  >
-                    Users
-                  </Link>
+                <Link
+                  href="/dashboard?tab=users"
+                  className={`${
+                    tab === "users" && url === "/dashboard" && "text-ring"
+                  } w-full flex items-center gap-2`}
+                >
+                  Users
+                </Link>
               </li>
             )}
-            <li  onClick={() => setIsOpen(!isOpen)}>
-                <SignOutButton />
+            <li onClick={() => setIsOpen(!isOpen)}>
+              <SignOutButton />
             </li>
           </ul>
         </nav>
@@ -161,12 +173,6 @@ function Header() {
                 <Link href={item.href}>{item.title}</Link>
               </li>
             ))}
-            {/* add dashboard link when user is signed in */}
-            {isSignedIn && (
-              <li className="lg:text-lg">
-                <Link href={"/dashboard"}>Dashboard</Link>
-              </li>
-            )}
           </ul>
         </nav>
         <div>
