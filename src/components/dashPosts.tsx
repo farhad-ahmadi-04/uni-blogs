@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import Container from "./ui/container";
-import { TypographyH1, TypographyH3, TypographyP } from "./ui/typography";
+import { TypographyH1, TypographyH3 } from "./ui/typography";
 import { postInterface } from "@/types/postT";
 import {
   Table,
@@ -20,27 +20,25 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
 import { CircleAlert } from "lucide-react";
+import Loading from "@/app/loading";
 
 export default function DashPosts() {
   const { user } = useUser();
-  console.log("user", user);
-
   const [userPosts, setUserPosts] = useState<postInterface[]>([]);
   const [postIdToDelete, setPostIdToDelete] = useState("");
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        setLoader(true);
         const res = await fetch("/api/post/get", {
           method: "POST",
           headers: {
@@ -56,8 +54,10 @@ export default function DashPosts() {
         if (res.ok) {
           setUserPosts(data.posts);
         }
+        setLoader(false);
       } catch (error: any | unknown) {
         console.log(error.message);
+        setLoader(false);
       }
     };
     if (user?.publicMetadata?.isAdmin) {
@@ -102,6 +102,10 @@ export default function DashPosts() {
         </Container>
       </section>
     );
+  }
+
+  if (loader) {
+    return <Loading />;
   }
 
   return (
@@ -172,7 +176,9 @@ export default function DashPosts() {
               )}
             </Table>
           ) : (
-            <TypographyH3 className="text-center">You have no posts yet!</TypographyH3>
+            <TypographyH3 className="text-center">
+              You have no posts yet!
+            </TypographyH3>
           )}
 
           <DialogContent className="sm:max-w-md">
