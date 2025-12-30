@@ -7,6 +7,7 @@ import { ThemeContextProvider } from "@/hooks/useContext";
 import { ImageKitProvider } from "@imagekit/next";
 import { Suspense } from "react";
 import Loading from "@/app/loading";
+import Footer from "@/components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,13 +40,16 @@ export default function RootLayout({
             className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
           >
             <ThemeContextProvider>
-              <Suspense fallback={<Loading />}>
-                {/* header */}
-                <Header />
-                {/* main */}
-                <main className="min-h-screen">{children}</main>
-                {/* footer */}
-              </Suspense>
+              {/* header */}
+              <Header />
+              {/* main */}
+
+              <main className="min-h-screen">
+                <Suspense fallback={<Loading />}>{children} </Suspense>
+              </main>
+
+              {/* footer */}
+              <Footer />
             </ThemeContextProvider>
           </body>
         </html>
