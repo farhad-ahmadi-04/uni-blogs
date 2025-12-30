@@ -1,13 +1,12 @@
-
 export interface postInterface {
   _id: string;
   userId: string;
   content: string;
   title: string;
-  image:string;
-    category: string,
-  slug: string,
-  createdAt: string,
-  updatedAt: string,
-  __v: number,
-};
+  image: string;
+  category: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
