@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import DashProfile from "@/components/dashProfile";
 import DashPosts from "@/components/dashPosts";
 import DashUsers from "@/components/dashUsers";
 import DashboardComp from "@/components/dashboardComp";
+import Loading from "../loading";
 
 export default function Dashboard() {
   const searchParams = useSearchParams();
@@ -22,12 +23,28 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen w-full my-5">
       {/* profile... */}
-      {tab === "profile" && <DashProfile />}
+      {tab === "profile" && (
+        <Suspense fallback={<Loading />}>
+          <DashProfile />
+        </Suspense>
+      )}
 
-      {tab === "posts" && <DashPosts />}
+      {tab === "posts" && (
+        <Suspense fallback={<Loading />}>
+          <DashPosts />
+        </Suspense>
+      )}
 
-      {tab === "users" && <DashUsers />}
-      {tab === "dash" && <DashboardComp />}
+      {tab === "users" && (
+        <Suspense fallback={<Loading />}>
+          <DashUsers />
+        </Suspense>
+      )}
+      {tab === "dash" && (
+        <Suspense fallback={<Loading />}>
+          <DashboardComp />
+        </Suspense>
+      )}
     </div>
   );
 }
