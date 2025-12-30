@@ -11,7 +11,7 @@ export default async function Home() {
 let post = [] as postInterface[];
   let error = ""
   try {
-    const result = await fetch(process.env.URL + "/api/post/get", {
+    const result = await fetch(process.env.VERCEL_URL + "/api/post/get", {
       method: "POST",
       body: JSON.stringify({ limit: 9, order: 'desc' }),
       cache: "no-store",
