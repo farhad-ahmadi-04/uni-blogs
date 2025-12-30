@@ -91,7 +91,10 @@ export default function DashPosts() {
       console.log(error.message);
     }
   };
-
+  
+  if (loader) {
+    return <Loading />;
+  }
   if (!user?.publicMetadata?.isAdmin) {
     return (
       <section className="w-full">
@@ -104,9 +107,6 @@ export default function DashPosts() {
     );
   }
 
-  if (loader) {
-    return <Loading />;
-  }
 
   return (
     <section>
