@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { category, formSchema, formSchemaType } from "./createPostFormSchema";
+import { category, formSchema, formSchemaType } from "../lib/createPostFormSchema";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 import "react-quill-new/dist/quill.snow.css";
@@ -248,7 +248,7 @@ function CreatePostForm(): JSX.Element {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={postLoading}>
+        <Button type="submit" disabled={postLoading} className="mt-5 sm:mt-0">
           {postLoading ? "Publishing..." : "Publish Post"}
         </Button>
       </form>

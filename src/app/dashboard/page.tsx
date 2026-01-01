@@ -7,6 +7,8 @@ import DashPosts from "@/components/dashPosts";
 import DashUsers from "@/components/dashUsers";
 import DashboardComp from "@/components/dashboardComp";
 import Loading from "../loading";
+import CreatePostForm from "../../components/createPostForm";
+import DashCreatePost from "@/components/dashCreatePost";
 
 export default function Dashboard() {
   const searchParams = useSearchParams();
@@ -26,6 +28,12 @@ export default function Dashboard() {
       {tab === "profile" && (
         <Suspense fallback={<Loading />}>
           <DashProfile />
+        </Suspense>
+      )}
+
+      {tab === "create-post" && (
+        <Suspense fallback={<Loading />}>
+          <DashCreatePost />
         </Suspense>
       )}
 
