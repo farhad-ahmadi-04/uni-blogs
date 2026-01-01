@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Edit,
   LayoutDashboard,
   LogOut,
   NotepadText,
@@ -69,6 +70,22 @@ export default function DashboardSidebar() {
             </Link>
           </Button>
         </li>
+         {(user?.publicMetadata?.isAdmin as boolean) && (
+          <li>
+            <Button
+              variant={tab === " create-post" ? "default" : "ghost"}
+              className="w-full"
+            >
+              <Link
+                href="/dashboard?tab=create-post"
+                className="w-full flex items-center gap-2"
+              >
+                <Edit />
+                Create post
+              </Link>
+            </Button>
+          </li>
+        )}
         {(user?.publicMetadata?.isAdmin as boolean) && (
           <li>
             <Button
