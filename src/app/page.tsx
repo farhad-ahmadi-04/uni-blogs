@@ -15,12 +15,12 @@ let post = [] as postInterface[];
       method: "POST",
       body: JSON.stringify({ limit: 9, order: 'desc' }),
       cache: "no-store",
-    });
-    const data = await result.json();
-    if(data.ok){
+    });    
+    if(result.ok){
+      const data = await result.json();
       post = data.posts;
     }
-    if(!data.ok){
+    if(!result.ok){
       error = "Failed to load post"
     }
   } catch (error) {
