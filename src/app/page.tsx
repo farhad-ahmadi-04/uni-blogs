@@ -11,7 +11,7 @@ export default async function Home() {
 let post = [] as postInterface[];
   let error = ""
   try {
-    const result = await fetch(process.env.VERCEL_URL + "/api/post/get", {
+    const result = await fetch(`https://${process.env.VERCEL_URL}/api/post/get`, {
       method: "POST",
       body: JSON.stringify({ limit: 9, order: 'desc' }),
       cache: "no-store",
@@ -31,7 +31,7 @@ let post = [] as postInterface[];
     return (
       <section>
         <Container>
-          <h2 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl">
+          <h2 className="text-3xl mt-10 p-3 text-center max-w-2xl mx-auto lg:text-4xl">
             Something went wrong please try again.
           </h2>
         </Container>

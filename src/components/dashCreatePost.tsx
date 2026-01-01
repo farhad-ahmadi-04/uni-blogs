@@ -8,7 +8,7 @@ function DashCreatePost() {
 
   if (!isLoaded) return null;
 
-  if (isSignedIn && user.publicMetadata.isAdmin) {
+  if (isSignedIn) {
     return (
       <section className="w-full">
         <Container className="flex justify-center mt-3">

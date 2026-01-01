@@ -129,7 +129,7 @@ function Header() {
                 </div>
               </Link>
             </li>
-             {isSignedIn && (user.publicMetadata.isAdmin as boolean) && (
+             {isSignedIn  && (
               <li onClick={() => setIsOpen(!isOpen)}>
                 <Link
                   href="/dashboard?tab=create-post"
