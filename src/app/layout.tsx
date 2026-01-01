@@ -40,13 +40,12 @@ export default function RootLayout({
             className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
           >
             <ThemeContextProvider>
-              {/* header */}
-              <Header />
-              {/* main */}
-
-              <main className="min-h-screen">
-                <Suspense fallback={<Loading />}>{children} </Suspense>
-              </main>
+              <Suspense fallback={<Loading />}>
+                {/* header */}
+                <Header />
+                {/* main */}
+                <main className="min-h-screen">{children}</main>
+              </Suspense>
 
               {/* footer */}
               <Footer />
