@@ -27,7 +27,7 @@ let post = [] as postInterface[];
     error =  "Failed to load post" ;
   }
 
-  if (!post || error === "Failed to load post") {
+  if (!post || error) {
     return (
       <section>
         <Container>
