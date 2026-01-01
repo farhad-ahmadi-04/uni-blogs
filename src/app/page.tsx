@@ -17,8 +17,12 @@ let post = [] as postInterface[];
       cache: "no-store",
     });
     const data = await result.json();
-    
-    post = data.posts;
+    if(data.ok){
+      post = data.posts;
+    }
+    if(!data.ok){
+      error = "Failed to load post"
+    }
   } catch (error) {
     error =  "Failed to load post" ;
   }

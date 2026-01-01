@@ -129,6 +129,18 @@ function Header() {
                 </div>
               </Link>
             </li>
+             {isSignedIn && (user.publicMetadata.isAdmin as boolean) && (
+              <li onClick={() => setIsOpen(!isOpen)}>
+                <Link
+                  href="/dashboard?tab=create-post"
+                  className={`${
+                    tab === "create-post" && url === "/dashboard" && "text-ring"
+                  } w-full flex items-center gap-2`}
+                >
+                  Create Post
+                </Link>
+              </li>
+            )}
             {(user?.publicMetadata?.isAdmin as boolean) && (
               <li onClick={() => setIsOpen(!isOpen)}>
                 <Link
