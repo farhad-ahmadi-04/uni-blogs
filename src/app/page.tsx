@@ -9,7 +9,7 @@ export default async function Home() {
   let error = "";
   try {
     const result = await fetch(
-      `https://${process.env.VERCEL_URL}/api/post/get`,
+      `${process.env.VERCEL_URL}/api/post/get`,
       {
         method: "POST",
         body: JSON.stringify({ limit: 9, order: "desc" }),
