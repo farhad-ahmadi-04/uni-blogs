@@ -2,6 +2,13 @@ import Link from "next/link";
 import { TypographyH3, TypographyP } from "./ui/typography";
 import { Image } from "@imagekit/next";
 import { postInterface } from "@/types/postT";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "./ui/card";
 
 /**
  *
@@ -9,26 +16,30 @@ import { postInterface } from "@/types/postT";
  */
 function BlogCard({ post }: { post: postInterface }) {
   return (
-    <div className="border border-border">
-      <div className="flex items-center justify-center h-52 bg-blue-950">
+    <Card className="pt-0 rounded-xl">
+      <CardHeader className="flex items-center justify-center h-52 bg-blue-950 p-0 rounded-xl">
         <Image
           src={post.image}
           width={300}
           height={200}
           alt={post.title}
-          className="w-full h-full bg-cover"
+          className="w-full h-full bg-cover rounded-t-xl"
         />
-      </div>
-      <div className="p-5 space-y-4">
+      </CardHeader>
+      <CardContent className="w-full">
         <Link href={`/post/${post.slug}`}>
           <TypographyH3>{post.title}</TypographyH3>
         </Link>
-        <TypographyP className="line-clamp-3">{post.category}</TypographyP>
         <TypographyP className="first-letter:uppercase">
+          {post.category}
+        </TypographyP>
+      </CardContent>
+      <CardFooter>
+        <TypographyP>
           {new Date(post.createdAt).toLocaleDateString()}
         </TypographyP>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 }
 
