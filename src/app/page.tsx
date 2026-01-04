@@ -21,9 +21,13 @@ export default async function Home() {
       post = data.posts;
     }
     if (!result.ok) {
+      console.log(result);
+      
       error = "Failed to load post";
     }
   } catch (error) {
+    console.log(error);
+    
     error = "Failed to load post";
   }
 
