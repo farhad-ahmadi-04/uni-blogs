@@ -23,14 +23,10 @@ export default async function Home() {
       cache: "no-store",
     });
     if (result.ok) {
-      console.log(result);
       const data = await result.json();
-
       post = data.posts;
     }
     if (!result.ok) {
-      console.log(result);
-
       error = "Failed to load post";
     }
   } catch (error) {
