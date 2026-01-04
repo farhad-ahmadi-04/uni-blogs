@@ -1,44 +1,31 @@
 import BlogCard from "@/components/blogCard";
 import Container from "@/components/ui/container";
 import { FlickeringGrid } from "@/components/ui/flickering-grid";
-import {
-  TypographyH1,
-  TypographyP,
-} from "@/components/ui/typography";
+import { TypographyH1, TypographyP } from "@/components/ui/typography";
 import { postInterface } from "@/types/postT";
 
 export default async function Home() {
-let post = [] as postInterface[];
-  let error = ""
+  let post = [] as postInterface[];
+  let error = "";
   try {
-    const result = await fetch(`https://${process.env.VERCEL_URL}/api/post/get`, {
-      method: "POST",
-      body: JSON.stringify({ limit: 9, order: 'desc' }),
-      cache: "no-store",
-    });    
-    if(result.ok){
+    const result = await fetch(
+      `https://${process.env.VERCEL_URL}/api/post/get`,
+      {
+        method: "POST",
+        body: JSON.stringify({ limit: 9, order: "desc" }),
+        cache: "no-store",
+      }
+    );
+    if (result.ok) {
       const data = await result.json();
       post = data.posts;
     }
-    if(!result.ok){
-      error = "Failed to load post"
+    if (!result.ok) {
+      error = "Failed to load post";
     }
   } catch (error) {
-    error =  "Failed to load post" ;
+    error = "Failed to load post";
   }
-
-  if (!post || error) {
-    return (
-      <section>
-        <Container>
-          <h2 className="text-3xl mt-10 p-3 text-center max-w-2xl mx-auto lg:text-4xl">
-            Something went wrong please try again.
-          </h2>
-        </Container>
-      </section>
-    );
-  }
-
 
   return (
     <>
@@ -56,7 +43,9 @@ let post = [] as postInterface[];
           <div>
             <TypographyH1>blogs for Developers</TypographyH1>
             <TypographyP className="text-muted-foreground">
-              Latest news and updates
+              Explore our collection of insightful blogs tailored for developers,
+              covering the latest trends, tips, and best practices in the tech
+              world.
             </TypographyP>
           </div>
         </Container>
@@ -64,9 +53,23 @@ let post = [] as postInterface[];
       {/* blogs sec */}
       <section>
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 overflow-hidden">
-            {post.map(p=> <BlogCard key={p._id} post={p} />)}
-          </div>
+          {error && (
+            <h2 className="text-3xl mt-10 p-3 text-center max-w-2xl mx-auto lg:text-4xl">
+              Something went wrong please try again.
+            </h2>
+          )}
+          {post.length === 0 && !error && (
+            <h2 className="text-3xl mt-10 p-3 text-center max-w-2xl mx-auto lg:text-4xl">
+              No blogs found.
+            </h2>
+          )}
+          {post && !error && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 overflow-hidden">
+              {post.map((p) => (
+                <BlogCard key={p._id} post={p} />
+              ))}
+            </div>
+          )}
         </Container>
       </section>
     </>
