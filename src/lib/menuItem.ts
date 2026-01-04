@@ -13,8 +13,8 @@ const menuItems = [
     icon: BookOpenText ,
   },
   {
-    title: "Projects",
-    href: "/projects",
+    title: "Contact Us",
+    href: "/contact-us",
     icon: Newspaper
   },
 ];
