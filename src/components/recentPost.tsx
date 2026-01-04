@@ -4,7 +4,7 @@ import { TypographyH1, TypographyH3 } from './ui/typography';
 export default async function RecentPosts({limit}: {limit: number}) {
   let posts = null;
   try {
-    const result = await fetch(`https://${process.env.VERCEL_URL}/api/post/get`, {
+    const result = await fetch(`https://${process.env.NEXT_VERCEL_URL}/api/post/get`, {
       method: 'POST',
       body: JSON.stringify({ limit: limit, order: 'desc' }),
       cache: 'no-store',

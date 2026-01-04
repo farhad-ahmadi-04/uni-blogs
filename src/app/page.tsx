@@ -3,31 +3,39 @@ import Container from "@/components/ui/container";
 import { FlickeringGrid } from "@/components/ui/flickering-grid";
 import { TypographyH1, TypographyP } from "@/components/ui/typography";
 import { postInterface } from "@/types/postT";
+import { headers } from "next/headers";
 
 export default async function Home() {
+  const headersList = headers();
+  const host = (await headersList).get("host");   
   let post = [] as postInterface[];
   let error = "";
   try {
-    const result = await fetch(
-      `${process.env.VERCEL_URL}/api/post/get`,
-      {
-        method: "POST",
-        body: JSON.stringify({ limit: 9, order: "desc" }),
-        cache: "no-store",
-      }
-    );
+  const result = await fetch(
+    host === "localhost:3000"
+      ? `http://${process.env.NEXT_VERCEL_URL}/api/post/get`
+      : `https://${host === process.env.NEXT_VERCEL_URL ? process.env.NEXT_VERCEL_URL : host}/api/post/get`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ limit: 9, order: "desc" }),
+      cache: "no-store",
+    });
     if (result.ok) {
+      console.log(result);
       const data = await result.json();
+
       post = data.posts;
     }
     if (!result.ok) {
       console.log(result);
-      
+
       error = "Failed to load post";
     }
   } catch (error) {
     console.log(error);
-    
+
     error = "Failed to load post";
   }
 
@@ -47,9 +55,9 @@ export default async function Home() {
           <div>
             <TypographyH1>blogs for Developers</TypographyH1>
             <TypographyP className="text-muted-foreground">
-              Explore our collection of insightful blogs tailored for developers,
-              covering the latest trends, tips, and best practices in the tech
-              world.
+              Explore our collection of insightful blogs tailored for
+              developers, covering the latest trends, tips, and best practices
+              in the tech world.
             </TypographyP>
           </div>
         </Container>

@@ -16,7 +16,7 @@ export default async function PostPage({
   let post: postInterface | null = null;
   let error = "";
   try {
-    const result = await fetch(`https://${process.env.VERCEL_URL}/api/post/get`, {
+    const result = await fetch(`http://${process.env.NEXT_VERCEL_URL}/api/post/get`, {
       method: "POST",
       body: JSON.stringify({ slug: slug }),
       cache: "no-store",
