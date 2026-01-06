@@ -2,7 +2,7 @@ import RecentPosts from "@/components/recentPost";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { TypographyH1 } from "@/components/ui/typography";
-import { DEFAULT_IMAGE, DEFAULT_IMAGE_ALT } from "@/lib/canstants";
+import { DEFAULT_IMAGE, DEFAULT_IMAGE_ALT } from "@/lib/constants";
 import { postInterface } from "@/types/postT";
 import { Image } from "@imagekit/next";
 import Link from "next/link";
@@ -26,7 +26,7 @@ export default async function PostPage({
     }
     if (result.ok) {
       const data = await result.json();      
-      post = data?.posts?.[0];
+      post = data?.posts?.[0];      
     }
   } catch (error) {
     error = "Failed to load post";
