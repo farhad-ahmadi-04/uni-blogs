@@ -28,7 +28,7 @@ const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 import "react-quill-new/dist/quill.snow.css";
 import useUploadImage from "@/hooks/useUploadImage";
 import { Image } from "@imagekit/next";
-import { DEFAULT_IMAGE, DEFAULT_IMAGE_ALT } from "@/lib/canstants";
+import { DEFAULT_IMAGE, DEFAULT_IMAGE_ALT } from "@/lib/constants";
 import { JSX, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -92,7 +92,7 @@ function CreatePostForm(): JSX.Element {
 
     // This will be type-safe and validated.
     try {
-      console.log(values);
+      
       setPostLoading(true);
       const res = await fetch("/api/post/create", {
         method: "POST",
@@ -101,7 +101,7 @@ function CreatePostForm(): JSX.Element {
         },
         body: JSON.stringify({
           ...values,
-          image: values.image["0"].name,
+          image: uploadResponse.url,
           userMongoId: user?.publicMetadata.userMongoId,
         }),
       });
@@ -113,6 +113,7 @@ function CreatePostForm(): JSX.Element {
         return;
       }
       if (res.ok) {
+        
         setPublishError(null);
         setPostLoading(false);
         router.push(`/post/${data.slug}`);
