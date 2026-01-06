@@ -11,7 +11,7 @@ import {
   TypographyH3,
   TypographyP,
 } from "@/components/ui/typography";
-import { DEFAULT_IMAGE, DEFAULT_IMAGE_ALT } from "@/lib/canstants";
+import { DEFAULT_IMAGE, DEFAULT_IMAGE_ALT } from "@/lib/constants";
 import userInfo from "@/lib/userInfo";
 import { Mail, Send } from "lucide-react";
 import Image from "next/image";

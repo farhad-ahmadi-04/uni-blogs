@@ -27,6 +27,7 @@ export const POST = async (req: Request) => {
     await connect();
     const data = await req.json();
     console.log("data from server:", data);
+    console.log(data.image["0"].name);
     
 
     if (
@@ -47,7 +48,7 @@ export const POST = async (req: Request) => {
       userId: user.publicMetadata.userMongoId,
       content: data.content,
       title: data.title,
-      image: data.image["0"].name,
+      image: data.image,
       category: data.category,
       slug,
     });
