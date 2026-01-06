@@ -49,8 +49,6 @@ export default function DashPosts() {
           }),
         });
         const data = await res.json();
-        console.log(data);
-
         if (res.ok) {
           setUserPosts(data.posts);
         }
@@ -76,6 +74,7 @@ export default function DashPosts() {
           postId: postIdToDelete,
           userId: user?.publicMetadata?.userMongoId,
         }),
+        cache: "reload",
       });
       const data = await res.json();
       if (res.ok) {
@@ -91,7 +90,7 @@ export default function DashPosts() {
       console.log(error.message);
     }
   };
-  
+
   if (loader) {
     return <Loading />;
   }
@@ -106,7 +105,6 @@ export default function DashPosts() {
       </section>
     );
   }
-
 
   return (
     <section>
