@@ -4,7 +4,6 @@ import { Image } from "@imagekit/next";
 import { postInterface } from "@/types/postT";
 import {
   Card,
-  CardAction,
   CardContent,
   CardFooter,
   CardHeader,
