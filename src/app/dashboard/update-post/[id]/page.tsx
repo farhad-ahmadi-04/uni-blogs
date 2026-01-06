@@ -32,7 +32,7 @@ const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 import "react-quill-new/dist/quill.snow.css";
 import useUploadImage from "@/hooks/useUploadImage";
 import { Image } from "@imagekit/next";
-import { DEFAULT_IMAGE, DEFAULT_IMAGE_ALT } from "@/lib/canstants";
+import { DEFAULT_IMAGE, DEFAULT_IMAGE_ALT } from "@/lib/constants";
 import { JSX, useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
@@ -67,7 +67,6 @@ function UpdatePost(): JSX.Element {
   const router = useRouter();
   const { user, isSignedIn } = useUser();
   const [publishError, setPublishError] = useState<string | null>(null);
-  const [formData, setFormData] = useState<formSchemaType>();
   const [existingImage, setExistingImage] = useState<string | null>(null);
 
   const {
