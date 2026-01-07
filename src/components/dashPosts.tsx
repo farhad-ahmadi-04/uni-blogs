@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import Container from "./ui/container";
@@ -28,6 +28,7 @@ import {
 import { Button } from "./ui/button";
 import { CircleAlert } from "lucide-react";
 import Loading from "@/app/loading";
+import { DialogDescription } from "@radix-ui/react-dialog";
 
 export default function DashPosts() {
   const { user } = useUser();
@@ -35,33 +36,35 @@ export default function DashPosts() {
   const [postIdToDelete, setPostIdToDelete] = useState("");
   const [loader, setLoader] = useState(false);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setLoader(true);
-        const res = await fetch("/api/post/get", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: user?.publicMetadata?.userMongoId,
-          }),
-        });
-        const data = await res.json();
-        if (res.ok) {
-          setUserPosts(data.posts);
-        }
-        setLoader(false);
-      } catch (error: any | unknown) {
-        console.log(error.message);
-        setLoader(false);
+  const fetchPosts = useCallback(async () => {
+    try {
+      setLoader(true);
+      const res = await fetch("/api/post/get", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: user?.publicMetadata?.userMongoId,
+        }),
+        cache: "no-store",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setUserPosts(data.posts);
       }
-    };
+    } catch (error: any | unknown) {
+      console.log(error.message);
+    } finally {
+      setLoader(false);
+    }
+  }, [user?.publicMetadata?.userMongoId]);
+
+  useEffect(() => {
     if (user?.publicMetadata?.isAdmin) {
       fetchPosts();
     }
-  }, [user?.publicMetadata?.isAdmin, user?.publicMetadata?.userMongoId]);
+  }, [user?.publicMetadata?.isAdmin, fetchPosts]);
 
   const handleDeletePost = async () => {
     try {
@@ -74,15 +77,13 @@ export default function DashPosts() {
           postId: postIdToDelete,
           userId: user?.publicMetadata?.userMongoId,
         }),
-        cache: "reload",
+        cache: "no-store",
       });
       const data = await res.json();
       if (res.ok) {
-        const newPosts = userPosts.filter(
-          (post) => post._id !== postIdToDelete
-        );
-        setUserPosts(newPosts);
         setPostIdToDelete(""); // Reset postIdToDelete after deletion
+        await fetchPosts();
+        
       } else {
         console.log(data.message);
       }
@@ -106,10 +107,10 @@ export default function DashPosts() {
     );
   }
 
-  return (
-    <section>
-      <Container>
-        <Dialog>
+  if (user?.publicMetadata?.isAdmin && !loader) {
+    return (
+      <section>
+        <Container>
           {user?.publicMetadata?.isAdmin && userPosts.length > 0 ? (
             <Table>
               <TableCaption>A list of your recent posts.</TableCaption>
@@ -151,14 +152,45 @@ export default function DashPosts() {
                       </TableCell>
                       <TableCell>{post.category}</TableCell>
                       <TableCell className="text-right">
-                        <DialogTrigger asChild>
-                          <span
-                            className="font-medium text-red-500 hover:underline cursor-pointer"
-                            onClick={() => setPostIdToDelete(post._id)}
-                          >
-                            Delete
-                          </span>
-                        </DialogTrigger>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <span
+                              className="font-medium text-red-500 hover:underline cursor-pointer"
+                              onClick={() => setPostIdToDelete(post._id)}
+                            >
+                              Delete
+                            </span>
+                          </DialogTrigger>
+
+                          <DialogContent className="sm:max-w-md">
+                            <DialogHeader>
+                              <DialogTitle className="flex justify-center">
+                                <CircleAlert className="text-red-500" />
+                              </DialogTitle>
+                            </DialogHeader>
+                            <DialogDescription>
+                            </DialogDescription>
+                              <div className="flex justify-center gap-4">
+                                Are you sure you want to delete this post?
+                              </div>
+                            <DialogFooter className="sm:justify-center">
+                              <DialogClose asChild>
+                                <Button type="button" variant="secondary">
+                                  No, cancel
+                                </Button>
+                              </DialogClose>
+                              <DialogClose asChild>
+                                <Button
+                                  type="button"
+                                  variant={"destructive"}
+                                  onClick={handleDeletePost}
+                                >
+                                  Yes, I&apos;m sure
+                                </Button>
+                              </DialogClose>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
                       </TableCell>
                       <TableCell className="text-right">
                         <Link
@@ -178,60 +210,8 @@ export default function DashPosts() {
               You have no posts yet!
             </TypographyH3>
           )}
-
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="flex justify-center">
-                <CircleAlert className="text-red-500" />
-              </DialogTitle>
-            </DialogHeader>
-            <div className="flex justify-center gap-4">
-              Are you sure you want to delete this post?
-            </div>
-            <DialogFooter className="sm:justify-center">
-              <DialogClose asChild>
-                <Button type="button" variant="secondary">
-                  No, cancel
-                </Button>
-              </DialogClose>
-              <DialogClose asChild>
-                <Button
-                  type="button"
-                  variant={"destructive"}
-                  onClick={handleDeletePost}
-                >
-                  Yes, I&apos;m sure
-                </Button>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
-
-          {/* <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        popup
-        size="md"
-        >
-        <Modal.Header />
-        <Modal.Body>
-        <div className="text-center">
-        <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
-        <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
-        Are you sure you want to delete this post?
-        </h3>
-        <div className="flex justify-center gap-4">
-        <Button color="failure" onClick={handleDeletePost}>
-        Yes, I&apos;m sure
-        </Button>
-        <Button color="gray" onClick={() => setShowModal(false)}>
-        No, cancel
-        </Button>
-        </div>
-        </div>
-        </Modal.Body>
-              </Modal> */}
-        </Dialog>
-      </Container>
-    </section>
-  );
+        </Container>
+      </section>
+    );
+  }
 }
