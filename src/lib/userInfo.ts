@@ -14,7 +14,7 @@ const userInfo = [
         telegram: "https://t.me/arshiya_oi"
     }, 
     {
-        image: "Alireza Jamali user.jpg",
+        image: "/Alireza Jamali user.jpg",
         name: "Alireza Jamali",
         role: "Software Engineer",
         email: "jm.reza672@gmail.com",
