@@ -10,6 +10,7 @@ function About() {
         <div className="max-w-2xl mx-auto space-y-6">
           <p className="text-lg text-muted-foreground leading-relaxed">
             uni-blogs is a lightweight platform for students and educators to create, share, and discover concise articles, study notes, and tutorials across university topics. It focuses on clear summaries, community-driven contributions, and easy navigation to support learning.
+            it also can be useful toward students who try to learn basics of programming.
           </p>
           
           <p className="text-lg text-muted-foreground leading-relaxed">
