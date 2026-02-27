@@ -20,5 +20,12 @@ const userInfo = [
         email: "jm.reza672@gmail.com",
         telegram: "https://t.me/Alireza_Jamali_403"
     },
+    {
+        image: "/Matinrezazadeh.png",
+        name: "Matin Rezazadeh",
+        role: "Software Engineer",
+        email: "Matinrezazadeh59@gmail.com",
+        telegram: "https://t.me/matinRZD"
+    },
 ]
 export default userInfo;
