@@ -29,7 +29,7 @@ function ContactUs() {
         <Card key={user.name} className="pt-0 rounded-xl">
             <CardHeader className="flex items-center justify-center h-52 bg-blue-950 p-0 rounded-xl">
               <Image
-                src={"/default user image.jpg"}
+                src={user.image || "/default user image.jpg" }
                 alt={"Default User Image"}
                 width={300}
                 height={200}
@@ -49,7 +49,7 @@ function ContactUs() {
                   <Mail/>
                 </Button>
               </Link>
-              <Link href={`https://t.me/${user.telegram}`}>
+              <Link href={`htts://t.me/${user.telegram}`}>
                 <Button variant="outline" className="w-full">
                   <Send/>
                 </Button>
